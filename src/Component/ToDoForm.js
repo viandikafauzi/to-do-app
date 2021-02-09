@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 
-const Input = () => {
+const ToDoForm = (props) => {
   const [text, setText] = useState('')
 
   const submitForm = (e) => {
     e.preventDefault()
+
+    props.onSubmit({ ToDoText: text })
+
+    setText('')
   }
 
   return (
@@ -16,7 +20,7 @@ const Input = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         ></input>
-        <button type='submit' className='formSubmit'>
+        <button type='submit' className='formSubmit' onClick={submitForm}>
           Add
         </button>
       </form>
@@ -24,4 +28,4 @@ const Input = () => {
   )
 }
 
-export default Input
+export default ToDoForm
