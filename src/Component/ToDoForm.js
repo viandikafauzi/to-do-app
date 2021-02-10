@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 const ToDoForm = (props) => {
   const [text, setText] = useState('')
@@ -6,14 +7,18 @@ const ToDoForm = (props) => {
   const submitForm = (e) => {
     e.preventDefault()
 
-    props.onSubmit({ ToDoText: text })
+    if (text === '') {
+      alert('text cannot be empty')
+    } else {
+      props.onSubmit({ id: uuidv4(), ToDoText: text, isComplete: false })
+    }
 
     setText('')
   }
 
   return (
     <>
-      <form onSubmit={submitForm}>
+      <form onSubmit={submitForm} className='formStyle'>
         <input
           type='text'
           className='formInput'
