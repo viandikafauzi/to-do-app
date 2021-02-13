@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import ToDoForm from '../Component/ToDoForm'
 import ToDoItem from '../Component/ToDoItem'
@@ -6,10 +6,17 @@ import ToDoItem from '../Component/ToDoItem'
 const ToDoList = () => {
   const [todos, setTodos] = useState([])
 
+  useEffect(() => {
+    const load = JSON.parse(localStorage.getItem('savedtodo'))
+    setTodos(load)
+    console.log(load)
+  }, [])
+
   const addTodo = (todo) => {
     const newTodos = [todo, ...todos]
 
     setTodos(newTodos)
+    localStorage.setItem('savedtodo', JSON.stringify(newTodos))
   }
 
   const completeItem = (todo) => {
@@ -20,6 +27,7 @@ const ToDoList = () => {
       return arr
     })
     setTodos(toggleComplete)
+    localStorage.setItem('savedtodo', JSON.stringify(toggleComplete))
   }
 
   const removeItem = (todo) => {
@@ -29,6 +37,7 @@ const ToDoList = () => {
       } else return false
     })
     setTodos(deleteElement)
+    localStorage.setItem('savedtodo', JSON.stringify(deleteElement))
   }
 
   return (
