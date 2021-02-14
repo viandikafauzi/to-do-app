@@ -7,9 +7,12 @@ const ToDoList = () => {
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
-    const load = JSON.parse(localStorage.getItem('savedtodo'))
-    setTodos(load)
-    console.log(load)
+    if (localStorage.getItem('savedtodo') === null) {
+      setTodos([])
+    } else {
+      const load = JSON.parse(localStorage.getItem('savedtodo'))
+      setTodos(load)
+    }
   }, [])
 
   const addTodo = (todo) => {
